@@ -1,4 +1,4 @@
-package com.zipzoong.querydsl.entity;
+package com.zipzoong.entity;
 
 import lombok.Getter;
 import lombok.Setter;
