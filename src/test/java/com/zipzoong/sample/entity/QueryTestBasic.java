@@ -1,4 +1,4 @@
-package com.zipzoong.entity;
+package com.zipzoong.sample.entity;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
@@ -7,8 +7,12 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.zipzoong.dto.*;
-import com.zipzoong.repository.MemberJpaRepository;
+import com.zipzoong.sample.dto.*;
+import com.zipzoong.sample.entity.Member;
+import com.zipzoong.sample.entity.QMember;
+import com.zipzoong.sample.entity.QTeam;
+import com.zipzoong.sample.entity.Team;
+import com.zipzoong.sample.repository.MemberJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +24,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.querydsl.jpa.JPAExpressions.*;
-import static com.zipzoong.entity.QMember.*;
+import static com.zipzoong.sample.entity.QMember.*;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
