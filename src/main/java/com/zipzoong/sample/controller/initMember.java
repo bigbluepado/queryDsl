@@ -1,7 +1,7 @@
-package com.zipzoong.controller;
+package com.zipzoong.sample.controller;
 
-import com.zipzoong.entity.Member;
-import com.zipzoong.entity.Team;
+import com.zipzoong.sample.entity.Member;
+import com.zipzoong.sample.entity.Team;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;

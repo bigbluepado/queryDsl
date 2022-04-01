@@ -1,4 +1,4 @@
-package com.zipzoong.entity;
+package com.zipzoong.sample.entity;
 
 import lombok.Getter;
 import lombok.Setter;

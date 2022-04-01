@@ -1,11 +1,9 @@
-package com.zipzoong.dto;
+package com.zipzoong.sample.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.zipzoong.entity.Team;
+import com.zipzoong.sample.entity.Member;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @NoArgsConstructor
@@ -31,5 +29,13 @@ public class MemberDto {
         this.id = id;
         this.username = username;
         this.teamName = teamName;
+    }
+
+    public MemberDto(Member member){
+        this.username = member.getUsername();
+        this.age = member.getAge();
+        if(member.getTeam() !=null){
+            this.teamName = member.getTeam().getName();
+        }
     }
 }

@@ -1,7 +1,7 @@
-package com.zipzoong.repository;
+package com.zipzoong.sample.repository;
 
-import com.zipzoong.dto.MemberSearchCondition;
-import com.zipzoong.dto.MemberTeamDto;
+import com.zipzoong.sample.dto.MemberSearchCondition;
+import com.zipzoong.sample.dto.MemberTeamDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

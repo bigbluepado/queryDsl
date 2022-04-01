@@ -1,18 +1,18 @@
-package com.zipzoong.repository;
+package com.zipzoong.sample.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.zipzoong.dto.MemberSearchCondition;
-import com.zipzoong.dto.MemberTeamDto;
-import com.zipzoong.dto.QMemberTeamDto;
+import com.zipzoong.sample.dto.MemberSearchCondition;
+import com.zipzoong.sample.dto.MemberTeamDto;
+import com.zipzoong.sample.dto.QMemberTeamDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static com.zipzoong.entity.QMember.member;
-import static com.zipzoong.entity.QTeam.team;
+import static com.zipzoong.sample.entity.QMember.member;
+import static com.zipzoong.sample.entity.QTeam.team;
 import static org.springframework.util.StringUtils.hasText;
 
 /*

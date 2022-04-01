@@ -1,4 +1,4 @@
-package com.zipzoong.entity;
+package com.zipzoong.sample.entity;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import javax.persistence.*;
 //객체를 찍으면 아래의 변수가 찍힌다. 편할려고 사용
 //team 은 연관관계가 있어 찍으면 안된다.!! 무한루프...
 @ToString(of = {"id", "username", "age"})
-public class Member {
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "member_id")
@@ -47,6 +47,7 @@ public class Member {
         this.team = team;
         team.getMembers().add(this);
     }
+
 
 
 }

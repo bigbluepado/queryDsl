@@ -1,16 +1,18 @@
 package com.zipzoong;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.zipzoong.entity.Hello;
-import com.zipzoong.entity.QHello;
+import com.zipzoong.sample.entity.Hello;
+import com.zipzoong.sample.entity.QHello;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+@EnableJpaAuditing
 @SpringBootTest(classes = QueryDslApplication.class)
 @Transactional
 //@Commit

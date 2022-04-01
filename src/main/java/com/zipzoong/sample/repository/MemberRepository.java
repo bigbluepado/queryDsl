@@ -1,14 +1,16 @@
-package com.zipzoong.repository;
+package com.zipzoong.sample.repository;
 
-import com.zipzoong.dto.MemberDto;
-import com.zipzoong.entity.Member;
+import com.zipzoong.sample.dto.MemberDto;
+import com.zipzoong.sample.dto.MemberProjection;
+import com.zipzoong.sample.entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
+
+import javax.persistence.LockModeType;
+import javax.persistence.QueryHint;
 import java.util.List;
 
 
@@ -58,7 +60,7 @@ public interface MemberRepository extends JpaRepository<Member , Long> , MemberR
     List<Member> findUser(@Param("username") String username, @Param("age") int age);
 
     //Sprig JPA, Dto 리턴 --> QueryDsl 로 많이 쓴다...
-    @Query("select new com.zipzoong.dto.MemberDto(m.id, m.username, t.name) from Member m join m.team t")
+    @Query("select new com.zipzoong.sample.dto.MemberDto(m.id, m.username, t.name) from Member m join m.team t")
     List<MemberDto> findMemberDto();
 
     //Sprig JPA, 여러개 변수 바인딩... 이정도는 쓴다는데.. 그냥 QuseryDsl 로 해도 될 듯.. 근데 이게 간단하긴 해 보이긴 하다.
@@ -84,4 +86,55 @@ public interface MemberRepository extends JpaRepository<Member , Long> , MemberR
     @Query(value = "update Member m set m.age = m.age +1 where m.age >= :age ")
     int updateBulk(@Param("age") int age);
 
+    //Sprig JPA,  Join 이 필요할 때 fetch join 을 이용한다.
+    //Team 까지 한번에 가져 옴..
+    //QueryDsl을 써도 되는데... 간단한건 그냥 Spring JPA 를 써도 될 듯... 대신 DTO 생성이 약간 귀찮음...
+    @Query("select m from Member m left join fetch m.team")
+    List<Member> findMemberFetchJoin();
+
+    //Sprig JPA, @EntityGraph를 이용해서 쉽게 fetch join 을 사용 가능한다.
+    @Override
+    @EntityGraph(attributePaths = {"team"})
+    List<Member> findAll();
+
+    @EntityGraph(attributePaths = {"team"})
+    List<Member> findEntityGraphByUsername(@Param("username") String username);
+
+    //Sprig JPA, 읽기만 할 때 성능 최적화
+    // 큰 차이 없다. 왠만하면 하지 말자....!!!
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
+    List<Member> findReadOnlyByUsername(@Param("username") String username);
+
+    //Sprig JPA,  select for update 와 같이 다른곳에서 수정 못하도록 강제 lock 을 걸 수 있다.
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    List<Member> findLockByUsername(String username);
+
+    //Sprig JPA,  Native Query 를 쓰고 싶을 때 사용
+    /*
+      제약
+        Sort 파라미터를 통한 정렬이 정상 동작하지 않을 수 있음(믿지 말고 직접 처리)
+        JPQL처럼 애플리케이션 로딩 시점에 문법 확인 불가
+        동적 쿼리 불가
+        네이티브 SQL을 DTO로 조회할 때는 JdbcTemplate or myBatis 권장
+     */
+    @Query(value = "select * from member where username= ? and age = ?" , nativeQuery = true)
+    Member findNativeQuery(String username, int age);
+
+
+    //Sprig JPA,  Native Query 를 쓰고 싶을 때 사용
+    /*
+         DTO 조회로 사용 가능 !!!!!!!!!!!
+     */
+    @Query(value = "select m.member_id as id, m.username, t.name as teamName  " +
+            "from member m left join team t", countQuery = "select count(*) from member ",nativeQuery = true)
+    Page<MemberProjection> finidNativeProjection(Pageable pageable);
+
+
+    //Sprig JPA,  Native Query 를 쓰고 싶을 때 사용
+    /*
+         동적 쿼리가 된다.....  DTO 조회로 사용 가능 !!!!!!!!!!!
+     */
+    @Query(value = "select m.member_id as id, m.username, t.name as teamName  " +
+            "from member m left join team t where m.username=?", countQuery = "select count(*) from member ",nativeQuery = true)
+    Page<MemberProjection> finidNativeProjection2(@Param("username") String username, Pageable pageable);
 }

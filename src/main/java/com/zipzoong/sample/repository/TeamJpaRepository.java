@@ -1,6 +1,6 @@
-package com.zipzoong.repository;
+package com.zipzoong.sample.repository;
 
-import com.zipzoong.entity.Team;
+import com.zipzoong.sample.entity.Team;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 
@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
-
+@Repository
 public class TeamJpaRepository {
 
         @PersistenceContext

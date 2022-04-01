@@ -1,4 +1,4 @@
-package com.zipzoong.dto;
+package com.zipzoong.sample.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
